@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LogInAccount from "./screens/logIn";
+import CreateAccount from "./screens/createAccount";
+import ShowAllData from "./screens/ShowAllData";
+import AddAmountUser from "./screens/addAmountUser";
+import ThankYouScreen from "./screens/thankYouScreen";
+import RequiredAuth from "./utils/requiredAuth";
+import RequiredAuthForAdmin from "./utils/requiredAuthAdmin";
+import RequiredAuthForAddAmount from "./utils/requiredAuthForAddAmount";
+import isAdminAcc from "./utils/checkAdmin";
 
-function App() {
+const App = () => {
+  const isAdmin = isAdminAcc();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {!isAdmin ? (
+          <Route
+            path="/"
+            element={
+              <RequiredAuth>
+                <AddAmountUser />
+              </RequiredAuth>
+            }
+          />
+        ) : (
+          <Route
+            path="/"
+            element={
+              <RequiredAuthForAdmin>
+                <ShowAllData />
+              </RequiredAuthForAdmin>
+            }
+          />
+        )}
+        <Route exact path="/LogIn" element={<LogInAccount />} />
+        <Route path="/create_acc" element={<CreateAccount />} />
+
+        <Route
+          path="/ThankYou"
+          element={
+            <RequiredAuthForAddAmount>
+              <ThankYouScreen />
+            </RequiredAuthForAddAmount>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
