@@ -15,7 +15,6 @@ import isAdminAcc from "./utils/checkAdmin";
 const App = () => {
   const isAdmin = isAdminAcc();
 
-  console.log('asdadadsasdasd',process.env.CONFIG_URL)
   return (
     <BrowserRouter>
       <Routes>

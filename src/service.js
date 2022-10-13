@@ -15,7 +15,7 @@ export function createAccountApi(payload,successCallback,failCallback) {
     })
     .then((resp) => {
        console.log('resp====>>>>',resp)
-       successCallback()
+       successCallback(resp)
     })
     .catch((ex) => {
         console.log('errrr--->>>>',ex)

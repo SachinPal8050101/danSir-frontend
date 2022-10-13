@@ -1,7 +1,11 @@
 import React, {useState,setState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import '.././Style/CreateAcc.css'
 import { createAccountApi } from '../service';
+import {setInLocalStorage} from '../utils/setGetAsyncStorage'
 function CreateAccount() {
+
+   let navigate = useNavigate()
     
    const [formValues, setFormValues] = useState({
     employee_firstname: '',
@@ -18,9 +22,12 @@ function CreateAccount() {
         )
     }
 
-    const successApi=()=>{
+    const successApi=(res)=>{
         console.log('Success')
-
+        let token = res.data.data._id
+        console.log(res,token,res.data)
+        setInLocalStorage('Token',token)
+        navigate('/');
     }
 
     const failcallApi=(err)=>{
@@ -30,7 +37,6 @@ function CreateAccount() {
 
     const handleSubmit  = () => {
         if(formValues.password==formValues.confirmPassword){
-            delete formValues['confirmPassword'];
             createAccountApi(formValues,successApi,failcallApi)
         }else{
             alert("Password Does't match");
