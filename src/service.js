@@ -22,3 +22,18 @@ export function createAccountApi(payload,successCallback,failCallback) {
         failCallback(ex)
     });
 }
+
+export function logInApi(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/logIn`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>',ex)
+      failCallback(ex)
+  });
+}
