@@ -5,17 +5,15 @@ import { createAccountApi } from "../service"
 
 const ForgetPassword = ()=>{
 
-
 useEffect(()=>{
-    console.log('asdasda')
     createAccountApi()
 },[])
 
-    return(
+return(
         <div>
             <text>ForgetPassword</text>
         </div>
-    )
+)
 
 }
 
