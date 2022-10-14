@@ -1,16 +1,10 @@
-const increment = (count) => {
+const userCreateAccount = (data) => {
     return {
-        type: "INCREMENT",
-    }
-}
-
-const decrement = () => {
-    return {
-        type: "DECREMENT"
+        type: "CREAT_USER_DATA",
+        payload: data
     }
 }
 
 export default {
-    increment,
-    decrement
+    userCreateAccount
 }

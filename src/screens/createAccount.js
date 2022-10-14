@@ -1,11 +1,15 @@
 import React, {useState,setState} from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '.././Style/CreateAcc.css'
+import allActions from '../action';
 import { createAccountApi } from '../service';
 import {setInLocalStorage} from '../utils/setGetAsyncStorage'
+
 function CreateAccount() {
 
    let navigate = useNavigate()
+   let dispatch = useDispatch()
     
    const [formValues, setFormValues] = useState({
     employee_firstname: '',
@@ -26,6 +30,7 @@ function CreateAccount() {
         console.log('Success')
         let token = res.data.data._id
         console.log(res,token,res.data)
+        dispatch(allActions.userActions.userCreateAccount(res))
         setInLocalStorage('Token',token)
         navigate('/');
     }

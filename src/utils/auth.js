@@ -1,4 +1,7 @@
+import { getFromLocalStorage } from "./setGetAsyncStorage";
+
 const useAuth = ()=>{
-    return true
+    let token = getFromLocalStorage("Token");
+  return token;
 }
 export default useAuth;

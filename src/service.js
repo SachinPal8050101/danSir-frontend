@@ -37,3 +37,33 @@ export function logInApi(payload,successCallback,failCallback) {
       failCallback(ex)
   });
 }
+
+export function varifyEmailOfUser(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/verify_email`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>',ex)
+      failCallback(ex)
+  });
+}
+
+export function getUserData(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/get_user_data`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>',ex)
+      failCallback(ex)
+  });
+}

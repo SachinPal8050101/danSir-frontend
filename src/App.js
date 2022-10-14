@@ -11,27 +11,35 @@ import RequiredAuthForAdmin from "./utils/requiredAuthAdmin";
 
 import RequiredAuthForAddAmount from "./utils/requiredAuthForAddAmount";
 import isAdminAcc from "./utils/checkAdmin";
-import { useSelector,useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { getFromLocalStorage } from "./utils/setGetAsyncStorage";
 import allActions from "./action";
-
+import { getUserData } from "./service";
 
 const App = () => {
   const isAdmin = isAdminAcc();
-  const dispatch = useDispatch()
+  let dispatch = useDispatch();
 
 
-  const currentUser = useSelector(state => state.userReducers)
+  const successApi=(res)=>{
+    console.log('Success')
+    let token = res.data.data._id
+    console.log(res,token,res.data)
+    dispatch(allActions.userActions.userCreateAccount(res))
+}
 
-  useEffect(()=>{
-    dispatch(allActions.userActions.increment())
+const failcallApi=(err)=>{
+    alert(err.response.data);
+}
 
-    console.log("currentUser",currentUser)
-
-  },[])
-
-
-  console.log('seedklctor',currentUser)
+  useEffect(() => {
+    let token = getFromLocalStorage('Token')
+    token =  JSON.parse(token)
+    if(token){
+    getUserData({employee_id: token},successApi,failcallApi)
+    }
+  }, []);
 
   return (
     <BrowserRouter>

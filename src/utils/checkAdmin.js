@@ -1,4 +1,4 @@
 const isAdminAcc = ()=>{
-    return true
+    return false
 }
 export default isAdminAcc;
