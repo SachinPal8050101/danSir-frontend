@@ -11,9 +11,27 @@ import RequiredAuthForAdmin from "./utils/requiredAuthAdmin";
 
 import RequiredAuthForAddAmount from "./utils/requiredAuthForAddAmount";
 import isAdminAcc from "./utils/checkAdmin";
+import { useSelector,useDispatch } from "react-redux";
+import { useEffect } from "react";
+import allActions from "./action";
+
 
 const App = () => {
   const isAdmin = isAdminAcc();
+  const dispatch = useDispatch()
+
+
+  const currentUser = useSelector(state => state.userReducers)
+
+  useEffect(()=>{
+    dispatch(allActions.userActions.increment())
+
+    console.log("currentUser",currentUser)
+
+  },[])
+
+
+  console.log('seedklctor',currentUser)
 
   return (
     <BrowserRouter>
