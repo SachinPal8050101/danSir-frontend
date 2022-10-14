@@ -1,6 +1,8 @@
 
 const initialState = {
-    userDetailes: []
+    userDetailes: [],
+    totalAmount: 0,
+    amountAddedSuccess: false
   };
   
 
@@ -11,6 +13,16 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 userDetailes: action.payload
               }
+        case "USER_TOTAL_AMOUNT":
+            return {
+                ...state,
+                totalAmount: action.payload
+              }
+        case "AMOUNT_ADDED_USER":
+            return {
+                    ...state,
+                    amountAddedSuccess: action.payload
+                }
         default: 
             return state
     }

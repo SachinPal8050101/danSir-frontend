@@ -6,8 +6,6 @@ import queryString from 'query-string';
 import { varifyEmailOfUser } from "../service";
 import { useDispatch } from "react-redux";
 import allActions from "../action";
-import { setInLocalStorage } from "../utils/setGetAsyncStorage";
-
 
 const OtpScreen = (props)=>{
     const [isVarified,setVarified] = useState(false)
@@ -15,13 +13,8 @@ const OtpScreen = (props)=>{
     let dispatch = useDispatch()
     const employee_email = queryString.parse(location.search).token
 
-    useEffect(()=>{       
-        varifyEmailOfUser({employee_email:employee_email},successApi,failcallApi)
-    },[])
-
 
     const successApi=(res)=>{
-        console.log('Success',res)
         dispatch(allActions.userActions.userCreateAccount(res))
         setVarified(true)
     }
@@ -30,9 +23,24 @@ const OtpScreen = (props)=>{
         alert(err.response.data);
     }
 
+
+    const handleApi=()=>{
+        varifyEmailOfUser({employee_email:employee_email},successApi,failcallApi)
+    }
+
  if (isVarified) {
-    return <Navigate to="/" />;
-  } 
+    return <>
+    <div>
+        <text>now user is varified</text>
+    </div>
+    </>
+  }else{
+    return <>
+    <div>
+        <button onClick={handleApi}>Varify You mail </button>
+    </div>
+    </>
+  }
 }
 
 export default OtpScreen;

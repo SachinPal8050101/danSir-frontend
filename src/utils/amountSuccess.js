@@ -1,5 +1,5 @@
-const isAmountSuccess=()=>{
-    return false
 
+const isAmountSuccess=(isSuccess)=>{
+    return isSuccess
 }
 export default isAmountSuccess;

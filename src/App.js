@@ -10,7 +10,6 @@ import RequiredAuth from "./utils/requiredAuth";
 import RequiredAuthForAdmin from "./utils/requiredAuthAdmin";
 
 import RequiredAuthForAddAmount from "./utils/requiredAuthForAddAmount";
-import isAdminAcc from "./utils/checkAdmin";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getFromLocalStorage } from "./utils/setGetAsyncStorage";
@@ -18,19 +17,19 @@ import allActions from "./action";
 import { getUserData } from "./service";
 
 const App = () => {
-  const isAdmin = isAdminAcc();
   let dispatch = useDispatch();
-
+  let isAdmin = useSelector(
+    (state) => state.userReducers?.userDetailes?.data?.data?.isAdmin
+  );
 
   const successApi=(res)=>{
-    console.log('Success')
     let token = res.data.data._id
     console.log(res,token,res.data)
     dispatch(allActions.userActions.userCreateAccount(res))
-}
+  }
 
 const failcallApi=(err)=>{
-    alert(err.response.data);
+    alert("Something Went wrong !");
 }
 
   useEffect(() => {

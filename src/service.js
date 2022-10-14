@@ -67,3 +67,33 @@ export function getUserData(payload,successCallback,failCallback) {
       failCallback(ex)
   });
 }
+
+export function getTotalAmountOfUser(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/get_Total_user`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>111',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>',ex)
+      failCallback(ex)
+  });
+}
+
+export function sendAmoundOfPurchased(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/amount/amount_user`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>111',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>',ex)
+      failCallback(ex)
+  });
+}

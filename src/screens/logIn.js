@@ -5,12 +5,15 @@ import '.././Style/CreateAcc.css'
 import { setInLocalStorage } from "../utils/setGetAsyncStorage";
 
 const LogInAccount = ()=>{
+    const [isChecked, setIsChecked] = useState(false);
+
 
     let navigate = useNavigate()
 
     const [formValues, setFormValues] = useState({
         employee_email: '',
         password: '',
+        isAdmin: false
        });
     
         const handleInputChange = (e) => {
@@ -34,6 +37,11 @@ const LogInAccount = ()=>{
             logInApi(formValues,successApi,failcallApi)         
         }
 
+        const handleOnChange = () => {
+            setIsChecked(!isChecked);
+            setFormValues({...formValues,isAdmin: !isChecked})
+          };
+
     return(
         <div className="form">
             <div className="form-body">
@@ -44,6 +52,10 @@ const LogInAccount = ()=>{
                 <div className="password">
                     <label className="form__label" >Password </label>
                     <input className="form__input" name="password" type="password"  id="password" value={formValues.password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
+                </div>
+                <div className="password">
+                    <label className="form__label" >Is Admin </label>
+                    <input type="checkbox" id="topping" name="topping" value={isChecked} checked={isChecked} onChange={handleOnChange} />
                 </div>
             </div>
             <div className="footer">
