@@ -43,7 +43,7 @@ const failcallApi=(err)=>{
   }, []);
 
   return (
-    <BrowserRouter basename="/app">
+    <BrowserRouter basename="/">
       <Routes>
         {!isAdmin ? (
           <Route
