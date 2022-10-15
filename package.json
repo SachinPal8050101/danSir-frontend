@@ -2,7 +2,7 @@
   "name": "dansir-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://SachinPal8050101.github.io",
+  "homepage": "https://SachinPal8050101.github.io/danSir-frontend",
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "@testing-library/jest-dom": "^5.16.5",
