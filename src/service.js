@@ -97,3 +97,32 @@ export function sendAmoundOfPurchased(payload,successCallback,failCallback) {
       failCallback(ex)
   });
 }
+
+export function showAllAdminData(successCallback,failCallback) {
+  return axios
+  .get(`${process.env.REACT_APP_CONFIG_URL}/api/v1/find_data/find`)
+  .then((resp) => {
+     console.log('resp====>>>>111',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>',ex)
+      failCallback(ex)
+  });
+}
+
+export function getMoneyFromUser(payload,successCallback,failCallback) {
+  console.log('pay====>>',payload)
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/money/get_money`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>111',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>Paymoney',ex)
+      failCallback(ex)
+  });
+}

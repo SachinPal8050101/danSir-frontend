@@ -43,7 +43,7 @@ const failcallApi=(err)=>{
   return (
     <BrowserRouter>
       <Routes>
-        {!isAdmin ? (
+        {!isAdmin && isAdmin!=undefined ? (
           <Route
             path="/"
             element={
