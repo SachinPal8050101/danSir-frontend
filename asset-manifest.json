@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dansir-frontend/static/css/main.01ef4aaa.css",
+    "main.js": "/dansir-frontend/static/js/main.f7e44bb6.js",
+    "static/js/787.3e26bf79.chunk.js": "/dansir-frontend/static/js/787.3e26bf79.chunk.js",
+    "index.html": "/dansir-frontend/index.html",
+    "main.01ef4aaa.css.map": "/dansir-frontend/static/css/main.01ef4aaa.css.map",
+    "main.f7e44bb6.js.map": "/dansir-frontend/static/js/main.f7e44bb6.js.map",
+    "787.3e26bf79.chunk.js.map": "/dansir-frontend/static/js/787.3e26bf79.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.01ef4aaa.css",
+    "static/js/main.f7e44bb6.js"
+  ]
+}
