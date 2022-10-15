@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import allActions from "../action";
 import { getMoneyFromUser, showAllAdminData } from "../service";
+import { removeFromLocalStorage } from "../utils/setGetAsyncStorage";
 
-function ShowAllData() {
+function ShowAllData(props) {
   const [showData, setShowData] = useState([]);
+  let dispatch = useDispatch()
 
   const successApi = (res) => {
     setShowData(res.data.result);
@@ -26,6 +30,13 @@ function ShowAllData() {
   useEffect(() => {
     showAllAdminData(successApi, failcallApi);
   }, []);
+
+  const logOut=()=>{
+    removeFromLocalStorage('Token')
+    props.setLog(!props.log)
+    // props.setIsAdmin1(false)
+   dispatch(allActions.userActions.setIsAdminInRedux(false)) 
+  }
 
   return (
     <div>
@@ -59,6 +70,11 @@ function ShowAllData() {
           })}
         </tbody>
       </table>
+      <button
+                  onClick={logOut}
+                >
+                  Log Out 
+                </button>
     </div>
   );
 }

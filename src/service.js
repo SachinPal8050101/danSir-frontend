@@ -112,9 +112,38 @@ export function showAllAdminData(successCallback,failCallback) {
 }
 
 export function getMoneyFromUser(payload,successCallback,failCallback) {
-  console.log('pay====>>',payload)
   return axios
   .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/money/get_money`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>111',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>Paymoney',ex)
+      failCallback(ex)
+  });
+}
+
+export function forgetPasswordApi(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/forget_password/sendEmail`, payload, {
+    headers: getHeader(),
+  })
+  .then((resp) => {
+     console.log('resp====>>>>111',resp)
+     successCallback(resp)
+  })
+  .catch((ex) => {
+      console.log('errrr--->>>>Paymoney',ex)
+      failCallback(ex)
+  });
+}
+
+export function forgetPasswordApiAfterVarify(payload,successCallback,failCallback) {
+  return axios
+  .post(`${process.env.REACT_APP_CONFIG_URL}/api/v1/forget_password`, payload, {
     headers: getHeader(),
   })
   .then((resp) => {

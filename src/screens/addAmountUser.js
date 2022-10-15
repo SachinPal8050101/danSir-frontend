@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import allActions from "../action";
 import { getTotalAmountOfUser, sendAmoundOfPurchased } from "../service";
-import { getFromLocalStorage } from "../utils/setGetAsyncStorage";
+import { getFromLocalStorage, removeFromLocalStorage } from "../utils/setGetAsyncStorage";
 
-const AddAmountUser = () => {
+const AddAmountUser = (props) => {
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let userData = useSelector(
@@ -68,6 +68,14 @@ const AddAmountUser = () => {
     sendAmoundOfPurchased(formVal, successApi, failcallApi);
   };
 
+  const logOut=()=>{
+    removeFromLocalStorage('Token')
+    props.setLog(!props.log)
+    props.setIsAdmin1(false)
+   dispatch(allActions.userActions.setIsAdminInRedux(false)) 
+  }
+
+
   return (
     <div className="form">
       <div className="form-body">
@@ -90,6 +98,11 @@ const AddAmountUser = () => {
           Register
         </button>
       </div>
+      <button
+                  onClick={logOut}
+                >
+                  Log Out 
+                </button>
     </div>
   );
 };

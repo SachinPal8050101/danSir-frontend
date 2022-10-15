@@ -11,13 +11,15 @@ import RequiredAuthForAdmin from "./utils/requiredAuthAdmin";
 
 import RequiredAuthForAddAmount from "./utils/requiredAuthForAddAmount";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getFromLocalStorage } from "./utils/setGetAsyncStorage";
 import allActions from "./action";
 import { getUserData } from "./service";
+import ForgotPasswordAfterVarify from "./screens/forgetPasswordAfterVarify";
 
 const App = () => {
   let dispatch = useDispatch();
+  const [log,setLog]=useState(false)
   let isAdmin = useSelector(
     (state) => state.userReducers?.userDetailes?.data?.data?.isAdmin
   );
@@ -43,12 +45,12 @@ const failcallApi=(err)=>{
   return (
     <BrowserRouter>
       <Routes>
-        {!isAdmin && isAdmin!=undefined ? (
+        {!isAdmin ? (
           <Route
             path="/"
             element={
               <RequiredAuth>
-                <AddAmountUser />
+                <AddAmountUser setLog={setLog} log={log} />
               </RequiredAuth>
             }
           />
@@ -57,7 +59,7 @@ const failcallApi=(err)=>{
             path="/"
             element={
               <RequiredAuthForAdmin>
-                <ShowAllData />
+                <ShowAllData setLog={setLog} log={log} />
               </RequiredAuthForAdmin>
             }
           />
@@ -65,7 +67,8 @@ const failcallApi=(err)=>{
         <Route exact path="/LogIn" element={<LogInAccount />} />
         <Route path="/create_acc" element={<CreateAccount />} />
         <Route path="/create_acc/:id" element={<OtpScreen />} />
-        <Route path="/forgetPassword/:id" element={<ForgetPassword />} />
+        <Route path="/forgetPassword" element={<ForgetPassword />} />
+        <Route path="/forgetPassword/:id" element={<ForgotPasswordAfterVarify />} />
         <Route
           path="/ThankYou"
           element={

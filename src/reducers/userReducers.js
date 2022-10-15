@@ -23,6 +23,14 @@ const userReducer = (state = initialState, action) => {
                     ...state,
                     amountAddedSuccess: action.payload
                 }
+        case "SET_IS_ADMIN":
+            console.log('inredu',action.payload)
+                return {
+                         ...state,
+                            userDetailes:{
+                                ...state.userDetailes,isAdmin:action.payload
+                    }
+                }
         default: 
             return state
     }

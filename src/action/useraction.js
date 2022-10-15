@@ -19,8 +19,16 @@ const amountAddedSuccess = (data) => {
     }
 }
 
+const setIsAdminInRedux = (data) => {
+    return {
+        type: "SET_IS_ADMIN",
+        payload: data
+    }
+}
+
 export default {
     userCreateAccount,
     userTotalAmountIs,
-    amountAddedSuccess
+    amountAddedSuccess,
+    setIsAdminInRedux,
 }
