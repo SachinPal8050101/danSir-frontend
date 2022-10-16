@@ -19,11 +19,11 @@ function ShowAllData(props) {
 
   const handleClick = (employee_id, employee_name) => {
     var answer = prompt(`Please Enter ${employee_name} Amount`);
-    if (answer !== parseInt(answer, 10).toString()) {
-      alert("Please enter only numbers!");
-      answer = prompt(`Please Enter ${employee_name} Amount`);
-    }
-    if (answer > 0) {
+    // if (answer !== parseInt(answer, 10).toString()) {
+    //   alert("Please enter only numbers!");
+    //   answer = prompt(`Please Enter ${employee_name} Amount`);
+    // }
+    // if (answer > 0) {
       getMoneyFromUser(
         { employee_id: employee_id, get_money: Number(answer) },
         () => {
@@ -33,7 +33,7 @@ function ShowAllData(props) {
           alert(err.response.data);
         }
       );
-    }
+    // }
   };
 
   useEffect(() => {

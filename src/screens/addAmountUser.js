@@ -95,7 +95,7 @@ const AddAmountUser = (props) => {
           {/* containet Right */};
           <div className="content_rgt">
             <div className="register_sec">
-              <h1>{"Hey, "+ (userData?.employee_firstname ?? '')  + "Total Amount is " +(totalAmount ?? 0) }</h1>
+              <h1>{"Hey, "+ (userData?.employee_firstname ?? '') +' ' + "Total Amount is " +(totalAmount ?? 0) }</h1>
               <ul>
                 <li>
                   <span>Please Enter Your Amount</span>
