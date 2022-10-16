@@ -77,33 +77,53 @@ const AddAmountUser = (props) => {
 
 
   return (
-    <div className="form">
-      <div className="form-body">
-        <div className="password">
-          <label className="form__label">Purcased Amount </label>
-          <input
-            className="form__input"
-            name="amount"
-            id="password"
-            value={amount}
-            onChange={(e) => handleInputChange(e)}
-            placeholder="Amount"
-          />
+    <div className="container">
+        <div className="content">
+          {/* containet Left */}
+          <div className="content_lft">
+            <h1>Welcome from PPL!</h1>
+            <p className="discrptn">
+              There are many variations of passages of Lorem Ipsum available,
+              but the majority have suffered alteration in some form, by
+              injected humour, or randomised words which don't look even
+              slightly believable. If you are going to use a passage of Lorem
+              Ipsum, you need to be sure there isn't anything embarrassing
+              hidden in the middle of text.{' '}
+            </p>
+            <img src="images/img_9.png" alt />{' '}
+          </div>
+          {/* containet Right */};
+          <div className="content_rgt">
+            <div className="register_sec">
+              <h1>{"Hey, "+ (userData?.employee_firstname ?? '')  + "Total Amount is " +(totalAmount ?? 0) }</h1>
+              <ul>
+                <li>
+                  <span>Please Enter Your Amount</span>
+                  <input
+                    type="text"
+                    placeholder="Rs."
+                  />
+                </li>
+                <li>
+                  <a to="/ResetPassword">
+                    {' '}
+                    <input onClick={() => handleSubmit()}
+                      type="submit"
+                      defaultValue="Submit"
+                    />
+                  </a>
+                </li>
+                <li>
+                  <a to="/ResetPassword">
+                    {' '}
+                    <button onClick={logOut}>Log Out </button>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <text>{userData?.employee_firstname + "   " ?? ""}</text>
-        <text>{totalAmount + "   " ?? ""}</text>
       </div>
-      <div className="footer">
-        <button onClick={() => handleSubmit()} type="submit" class="btn">
-          Register
-        </button>
-      </div>
-      <button
-                  onClick={logOut}
-                >
-                  Log Out 
-                </button>
-    </div>
   );
 };
 

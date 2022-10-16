@@ -1,69 +1,107 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { logInApi } from "../service";
-import '.././Style/CreateAcc.css'
 import { setInLocalStorage } from "../utils/setGetAsyncStorage";
 import { useDispatch } from "react-redux";
 import allActions from "../action";
 
-const LogInAccount = ()=>{
-    const [isChecked, setIsChecked] = useState(false);
-    let dispatch = useDispatch()
+const LogInAccount = () => {
+  const [isChecked, setIsChecked] = useState(false);
+  let dispatch = useDispatch();
 
+  let navigate = useNavigate();
 
-    let navigate = useNavigate()
+  const [formValues, setFormValues] = useState({
+    employee_email: "",
+    password: "",
+    isAdmin: false,
+  });
 
-    const [formValues, setFormValues] = useState({
-        employee_email: '',
-        password: '',
-        isAdmin: false
-       });
-    
-        const handleInputChange = (e) => {
-            setFormValues(
-                {...formValues,[e.target.name]:e.target.value}
-            )
-        }
+  const handleInputChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
 
-        const successApi=(res)=>{
-            console.log('Success')
-            let token = res.data.data._id
-            dispatch(allActions.userActions.userCreateAccount(res))
-            setInLocalStorage('Token',token)
-            navigate('/');
-        }
-    
-        const failcallApi=(err)=>{
-            alert(err.response.data);
-        }
+  const successApi = (res) => {
+    console.log("Success");
+    let token = res.data.data._id;
+    dispatch(allActions.userActions.userCreateAccount(res));
+    setInLocalStorage("Token", token);
+    navigate("/");
+  };
 
-        const handleSubmit  = () => {
-            logInApi(formValues,successApi,failcallApi)         
-        }
+  const failcallApi = (err) => {
+    alert(err.response.data);
+  };
 
-    return(
-        <div className="form">
-            <div className="form-body">
-                <div className="email">
-                    <label className="form__label">Email </label>
-                    <input  type="email" name="employee_email" id="email" className="form__input" value={formValues.employee_email} onChange = {(e) => handleInputChange(e)} placeholder="Email"/>
-                </div>
-                <div className="password">
-                    <label className="form__label" >Password </label>
-                    <input className="form__input" name="password" type="password"  id="password" value={formValues.password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
-                </div>
+  const handleSubmit = () => {
+    logInApi(formValues, successApi, failcallApi);
+  };
+
+  return (
+    <>
+      <div className="container">
+        <div className="content">
+          <div className="content_rgt">
+            <div className="login_sec">
+              <h1>Log In</h1>
+              <ul>
+                <li>
+                  <span>Email-ID</span>
+                  <input
+                    type="text"
+                    name="employee_email"
+                    value={formValues.employee_email}
+                    onChange={(e) => handleInputChange(e)}
+                    placeholder="Enter your email"
+                  />
+                </li>
+                <li>
+                  <span>Password</span>
+                  <input
+                    type="text"
+                    name="password"
+                    value={formValues.password}
+                    onChange={(e) => handleInputChange(e)}
+                    placeholder="Enter your password"
+                  />
+                </li>
+                <li>
+                  <input type="checkbox" />
+                  Remember Me
+                </li>
+                <li>
+                  <input
+                    type="submit"
+                    onClick={() => handleSubmit()}
+                    defaultValue="Log In"
+                  />
+                  <Link to="/forgetPassword" href>
+                    Forgot Password
+                  </Link>
+                </li>
+              </ul>
+              <div className="addtnal_acnt">
+                I do not have any account yet.
+                <Link to="/create_acc">Create My Account Now !</Link>
+              </div>
             </div>
-            <div className="footer">
-                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
-               
-            </div>
-            <div className="footer">
-                <button onClick={()=>navigate("/forgetPassword")} type="submit" class="btn">Forget Password</button>
-               
-            </div>
+          </div>
+          <div className="content_lft">
+            <h1>Welcome from PPL!</h1>
+            <p className="discrptn">
+              There are many variations of passages of Lorem Ipsum available,
+              but the majority have suffered alteration in some form, by
+              injected humour, or randomised words which don't look even
+              slightly believable. If you are going to use a passage of Lorem
+              Ipsum, you need to be sure there isn't anything embarrassing
+              hidden in the middle of text.{" "}
+            </p>
+            <img src="images/img_9.png" alt />
+          </div>
         </div>
-    )
-
-}
+      </div>
+    </>
+  );
+};
 
 export default LogInAccount;

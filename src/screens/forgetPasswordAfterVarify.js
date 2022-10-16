@@ -38,7 +38,8 @@ const successApi=()=>{
 
 }
 
-const handleSubmit  = () => {
+const handleSubmit  = (e) => {
+    e.preventDefault();
     if(formValues.newPassword==formValues.confirmPassword){
         forgetPasswordApiAfterVarify({...formValues,employee_email:employee_email},successApi,(err)=>{console.log(err.response.data)})
     }
@@ -46,22 +47,43 @@ const handleSubmit  = () => {
 }
 
 return(
-    <div className="form">
-    <div className="form-body">
-    <div className="password">
-                    <label className="form__label" >Password </label>
-                    <input className="form__input" name="newPassword" type="password"  id="password" value={formValues.newPassword} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
-                </div>
-                <div className="confirm-password">
-                    <label className="form__label" >Confirm Password</label>
-                    <input className="form__input" name="confirmPassword" type="password" id="confirmPassword" value={formValues.confirmPassword} onChange = {(e) => handleInputChange(e)} placeholder="Confirm Password"/>
-                </div>
-        <div className="footer">
-                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
-               
-            </div>
-    </div>
+<>
+<div className="container">
+<div className="content">
+<div className="content_rgt">
+ <div className="register_sec">
+   <h1>Reset Password</h1>
+   <form onSubmit={handleSubmit}>
+   <ul>
+     <li>
+       <span>Enter New Password</span>
+       <input type="text" name="newPassword" placeholder="Enter your new password" value={formValues.newPassword} onChange = {(e) => handleInputChange(e)}  />
+     </li>
+     <li>
+       <span>Confirm Password</span>
+       <input type="text" placeholder="Enter your password again" name="confirmPassword" value={formValues.confirmPassword} onChange = {(e) => handleInputChange(e)} />
+     </li>
+     <li>
+       <input type="submit"  defaultValue="Submit"  />
+     </li>
+   </ul>
+   </form>
+ </div>
 </div>
+<div className="content_lft">
+ <h1>Welcome from PPL!</h1>
+ <p className="discrptn">
+   There are many variations of passages of Lorem Ipsum available, but the
+   majority have suffered alteration in some form, by injected humour, or
+   randomised words which don't look even slightly believable. If you are
+   going to use a passage of Lorem Ipsum, you need to be sure there isn't
+   anything embarrassing hidden in the middle of text.{" "}
+ </p>
+ <img src="images/img_9.png" alt />{" "}
+</div>
+</div>
+</div>
+</>
 )
 
 }

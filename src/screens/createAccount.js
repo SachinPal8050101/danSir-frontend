@@ -1,88 +1,159 @@
-import React, {useState,setState} from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import '.././Style/CreateAcc.css'
-import allActions from '../action';
-import { createAccountApi } from '../service';
-import {setInLocalStorage} from '../utils/setGetAsyncStorage'
+import React, { useState, setState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import allActions from "../action";
+import { createAccountApi } from "../service";
+import { setInLocalStorage } from "../utils/setGetAsyncStorage";
 
 function CreateAccount() {
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
 
-   let navigate = useNavigate()
-   let dispatch = useDispatch()
-    
-   const [formValues, setFormValues] = useState({
-    employee_firstname: '',
-    employee_lastname: '',
-    employee_code: '',
-    employee_email: '',
-    password: '',
-    confirmPassword: ''
-   });
+  const [formValues, setFormValues] = useState({
+    employee_firstname: "",
+    employee_lastname: "",
+    employee_code: "",
+    employee_email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    const handleInputChange = (e) => {
-        setFormValues(
-            {...formValues,[e.target.name]:e.target.value}
-        )
+  const handleInputChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
+
+  const successApi = (res) => {
+    console.log("Success");
+    let token = res.data.data._id;
+    console.log(res, token, res.data);
+    dispatch(allActions.userActions.userCreateAccount(res));
+    setInLocalStorage("Token", token);
+    navigate("/");
+  };
+
+  const failcallApi = (err) => {
+    alert(err.response.data);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formValues.password == formValues.confirmPassword) {
+      createAccountApi(formValues, successApi, failcallApi);
+    } else {
+      alert("Password Does't match");
     }
+  };
 
-    const successApi=(res)=>{
-        console.log('Success')
-        let token = res.data.data._id
-        console.log(res,token,res.data)
-        dispatch(allActions.userActions.userCreateAccount(res))
-        setInLocalStorage('Token',token)
-        navigate('/');
-    }
+  const handlePrevent = (e) => {
+    e.preventDefault();
+  };
 
-    const failcallApi=(err)=>{
-        alert(err.response.data);
-    }
-
-
-    const handleSubmit  = () => {
-        if(formValues.password==formValues.confirmPassword){
-            createAccountApi(formValues,successApi,failcallApi)
-        }else{
-            alert("Password Does't match");
-        }
-     
-    }
-
-    return(
-        <div className="form">
-            <div className="form-body">
-                <div className="username">
-                    <label className="form__label">First Name </label>
-                    <input className="form__input" type="text" value={formValues.employee_firstname} onChange = {handleInputChange} id="firstName" placeholder="First Name" name="employee_firstname"/>
-                </div>
-                <div className="lastname">
-                    <label className="form__label">Last Name </label>
-                    <input  type="text" name="employee_lastname" id="lastName" value={formValues.employee_lastname}  className="form__input" onChange = {(e) => handleInputChange(e)} placeholder="LastName"/>
-                </div>
-                <div className="email">
-                    <label className="form__label">Email </label>
-                    <input  type="email" name="employee_email" id="email" className="form__input" value={formValues.employee_email} onChange = {(e) => handleInputChange(e)} placeholder="Email"/>
-                </div>
-                <div className="employee_code">
-                    <label className="form__label" for="email">Employee Code </label>
-                    <input  type="employee_code" name="employee_code" id="employee_code" className="form__input" value={formValues.employee_code} onChange = {(e) => handleInputChange(e)} placeholder="Employee Code"/>
-                </div>
-                <div className="password">
-                    <label className="form__label" >Password </label>
-                    <input className="form__input" name="password" type="password"  id="password" value={formValues.password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
-                </div>
-                <div className="confirm-password">
-                    <label className="form__label" >Confirm Password</label>
-                    <input className="form__input" name="confirmPassword" type="password" id="confirmPassword" value={formValues.confirmPassword} onChange = {(e) => handleInputChange(e)} placeholder="Confirm Password"/>
-                </div>
+  return (
+    <>
+      <div className="container">
+        <div className="content">
+          <div className="content_rgt">
+            <div className="register_sec">
+              <form onSubmit={handleSubmit}>
+                <h1>Create An Account</h1>
+                <ul>
+                  <li>
+                    <span>Employee Code</span>
+                    <input
+                      type="text"
+                      name="employee_code"
+                      value={formValues.employee_code}
+                      placeholder="Enter your Employee Code"
+                      onChange={(e) => handleInputChange(e)}
+                      required
+                    />
+                  </li>
+                  <li>
+                    <span>Password</span>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Enter your password"
+                      value={formValues.password}
+                      onChange={(e) => handleInputChange(e)}
+                      required
+                    />
+                  </li>
+                  <li>
+                    <span>Confirm Password</span>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Enter your confirm password"
+                      value={formValues.confirmPassword}
+                      onChange={(e) => handleInputChange(e)}
+                      required
+                    />
+                  </li>
+                  <li>
+                    <span>Email</span>
+                    <input
+                      type="text"
+                      name="employee_email"
+                      value={formValues.employee_email}
+                      placeholder="Enter your email"
+                      onChange={(e) => handleInputChange(e)}
+                      required
+                    />
+                  </li>
+                  <li>
+                    <span>First Name</span>
+                    <input
+                      type="text"
+                      name="employee_firstname"
+                      placeholder="Enter your first name"
+                      value={formValues.employee_firstname}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </li>
+                  <li>
+                    <span>Last Name</span>
+                    <input
+                      type="text"
+                      name="employee_lastname"
+                      value={formValues.employee_lastname}
+                      placeholder="Enter your last name"
+                      onChange={(e) => handleInputChange(e)}
+                      required
+                    />
+                  </li>
+                  <li>
+                    <input type="checkbox" name="checkbox" />I agree to Term
+                    &amp; Conditions
+                  </li>
+                  <li>
+                    <input type="submit" defaultValue="Register" />
+                  </li>
+                </ul>
+              </form>
+              <div className="addtnal_acnt">
+                I already have an account.
+                <Link to="/login">Login My Account !</Link>
+              </div>
             </div>
-            <div className="footer">
-                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
-            </div>
+          </div>
+          <div className="content_lft">
+            <h1>Welcome from PPL!</h1>
+            <p className="discrptn">
+              There are many variations of passages of Lorem Ipsum available,
+              but the majority have suffered alteration in some form, by
+              injected humour, or randomised words which don't look even
+              slightly believable. If you are going to use a passage of Lorem
+              Ipsum, you need to be sure there isn't anything embarrassing
+              hidden in the middle of text.{" "}
+            </p>
+            <img src="images/img_9.png" alt />{" "}
+          </div>
         </div>
-       
-    )       
+      </div>
+    </>
+  );
 }
 
 export default CreateAccount;
