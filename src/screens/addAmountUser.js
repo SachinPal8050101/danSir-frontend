@@ -110,7 +110,7 @@ const AddAmountUser = (props) => {
                 <li>
                   <span>Please Enter Your Amount</span>
                   <input
-                    type="text"
+                    type="number"
                     placeholder="Rs."
                     name="amount"
                     value={amount}

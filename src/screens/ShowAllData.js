@@ -3,10 +3,13 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import allActions from "../action";
 import { getMoneyFromUser, showAllAdminData } from "../service";
+import ReactCustomModal from "../utils/Modal";
 import { removeFromLocalStorage } from "../utils/setGetAsyncStorage";
 
 function ShowAllData(props) {
   const [showData, setShowData] = useState([]);
+  const [showModal,setShowModal] = useState(false);
+
   let dispatch = useDispatch();
 
   const successApi = (res) => {
@@ -16,6 +19,11 @@ function ShowAllData(props) {
   const failcallApi = (err) => {
     alert(err.response.data);
   };
+
+  const successApiforAmountAdded=(res)=>{
+    setShowData(res.data.result);
+    setShowModal(true)
+  }
 
   const handleClick = (employee_id, employee_name) => {
     var answer = prompt(`Please Enter ${employee_name} Amount`);
@@ -27,7 +35,7 @@ function ShowAllData(props) {
       getMoneyFromUser(
         { employee_id: employee_id, get_money: Number(answer) },
         () => {
-          showAllAdminData(successApi, failcallApi);
+          showAllAdminData(successApiforAmountAdded, failcallApi);
         },
         (err) => {
           alert(err.response.data);
@@ -47,10 +55,18 @@ function ShowAllData(props) {
     dispatch(allActions.userActions.setIsAdminInRedux(false));
   };
 
+  const closeModal =()=>{
+    setShowModal(false)
+  }
+
+
   return (
     <>
       <div className="container">
         <div className="content">
+        {showModal?<ReactCustomModal 
+            onCloseModal={closeModal}
+          /> :null } 
           <div className="content_rgt">
             <div className="register_sec">
               <h1>Purchased Amound of All Users</h1>
