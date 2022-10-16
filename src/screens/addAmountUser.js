@@ -4,8 +4,12 @@ import { useNavigate } from "react-router-dom";
 import allActions from "../action";
 import { getTotalAmountOfUser, sendAmoundOfPurchased } from "../service";
 import { getFromLocalStorage, removeFromLocalStorage } from "../utils/setGetAsyncStorage";
+import ModalComponent from 'react-modal-dom';
+import ReactCustomModal from "../utils/Modal";
+
 
 const AddAmountUser = (props) => {
+  const [showModal,setShowModal] = useState(false);
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let userData = useSelector(
@@ -33,7 +37,7 @@ const AddAmountUser = (props) => {
         ),
       () => {}
     );
-    navigate('/ThankYou');
+    setShowModal(true)
   };
 
   const failcallApi = (err) => {
@@ -75,12 +79,18 @@ const AddAmountUser = (props) => {
    dispatch(allActions.userActions.setIsAdminInRedux(false)) 
   }
 
+  const closeModal =()=>{
+    setShowModal(false)
+  }
 
   return (
     <div className="container">
         <div className="content">
           {/* containet Left */}
           <div className="content_lft">
+         {showModal?<ReactCustomModal 
+            onCloseModal={closeModal}
+          /> :null } 
             <h1>Welcome from Chips Shop!</h1>
             <p className="discrptn">
               There are many variations of passages of Lorem Ipsum available,
