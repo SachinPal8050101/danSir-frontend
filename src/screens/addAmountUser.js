@@ -81,7 +81,7 @@ const AddAmountUser = (props) => {
         <div className="content">
           {/* containet Left */}
           <div className="content_lft">
-            <h1>Welcome from PPL!</h1>
+            <h1>Welcome from Chips Shop!</h1>
             <p className="discrptn">
               There are many variations of passages of Lorem Ipsum available,
               but the majority have suffered alteration in some form, by
