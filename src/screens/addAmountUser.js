@@ -102,6 +102,9 @@ const AddAmountUser = (props) => {
                   <input
                     type="text"
                     placeholder="Rs."
+                    name="amount"
+                    value={amount}
+                    onChange={(e) => handleInputChange(e)}
                   />
                 </li>
                 <li>
