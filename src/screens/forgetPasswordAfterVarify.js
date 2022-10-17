@@ -5,6 +5,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import allActions from "../action";
 import { createAccountApi, forgetPasswordApi, forgetPasswordApiAfterVarify } from "../service"
 import queryString from 'query-string';
+import Loader from "../component/loader";
 
 
 
@@ -13,6 +14,7 @@ const ForgotPasswordAfterVarify = ()=>{
     let dispatch = useDispatch()
     let navigate = useNavigate();
     const location = useLocation();
+    const [isLoader, setIsLoader] = useState(false);
     const employee_email = queryString.parse(location.search).token
 
     const [formValues, setFormValues] = useState({
@@ -35,19 +37,21 @@ useEffect(()=>{
 const successApi=()=>{
     dispatch(allActions.userActions.amountAddedSuccess(true))
     navigate('/ThankYou');
+    setIsLoader(false)
 
 }
 
 const handleSubmit  = (e) => {
     e.preventDefault();
     if(formValues.newPassword==formValues.confirmPassword){
-        forgetPasswordApiAfterVarify({...formValues,employee_email:employee_email},successApi,(err)=>{console.log(err.response.data)})
+      setIsLoader(true)
+        forgetPasswordApiAfterVarify({...formValues,employee_email:employee_email},successApi,(err)=>{ setIsLoader(false)})
     }
    
 }
 
 return(
-<>
+isLoader? <Loader/>:
 <div className="container">
 <div className="content">
 <div className="content_rgt">
@@ -72,18 +76,17 @@ return(
 </div>
 <div className="content_lft">
  <h1>Welcome from Chips Shop!</h1>
- <p className="discrptn">
+ {/* <p className="discrptn">
    There are many variations of passages of Lorem Ipsum available, but the
    majority have suffered alteration in some form, by injected humour, or
    randomised words which don't look even slightly believable. If you are
    going to use a passage of Lorem Ipsum, you need to be sure there isn't
    anything embarrassing hidden in the middle of text.{" "}
- </p>
- <img src="images/img_9.png" alt />{" "}
+ </p> */}
+ {/* <img src="images/img_9.png" alt />{" "} */}
 </div>
 </div>
 </div>
-</>
 )
 
 }

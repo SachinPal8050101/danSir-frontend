@@ -2,12 +2,14 @@ import React, { useState, setState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import allActions from "../action";
+import Loader from "../component/loader";
 import { createAccountApi } from "../service";
 import { setInLocalStorage } from "../utils/setGetAsyncStorage";
 
 function CreateAccount() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
+  const [isLoader, setIsLoader] = useState(false);
 
   const [formValues, setFormValues] = useState({
     employee_firstname: "",
@@ -29,15 +31,18 @@ function CreateAccount() {
     dispatch(allActions.userActions.userCreateAccount(res));
     setInLocalStorage("Token", token);
     navigate("/");
+    setIsLoader(false)
   };
 
   const failcallApi = (err) => {
     alert(err.response.data);
+    setIsLoader(false)
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formValues.password == formValues.confirmPassword) {
+      setIsLoader(true)
       createAccountApi(formValues, successApi, failcallApi);
     } else {
       alert("Password Does't match");
@@ -49,13 +54,13 @@ function CreateAccount() {
   };
 
   return (
-    <>
+    isLoader?<Loader/>:
       <div className="container">
         <div className="content">
-          <div className="content_rgt">
+          {/* <div className="content_rgt"> */}
             <div className="register_sec">
               <form onSubmit={handleSubmit}>
-                <h1>Create An Account</h1>
+                <h1>Welcome from Chips Shop!</h1>
                 <ul>
                   <li>
                     <span>Employee Code</span>
@@ -138,7 +143,7 @@ function CreateAccount() {
               </div>
             </div>
           </div>
-          <div className="content_lft">
+          {/* <div className="content_lft">
             <h1>Welcome from Chips Shop!</h1>
             <p className="discrptn">
               There are many variations of passages of Lorem Ipsum available,
@@ -149,10 +154,9 @@ function CreateAccount() {
               hidden in the middle of text.{" "}
             </p>
             <img src="images/img_9.png" alt />{" "}
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
-    </>
   );
 }
 

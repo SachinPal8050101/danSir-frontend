@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import allActions from "../action";
+import Loader from "../component/loader";
 import { createAccountApi, forgetPasswordApi } from "../service";
 
 const ForgetPassword = () => {
   let dispatch = useDispatch();
   let navigate = useNavigate();
+  const [isLoader, setIsLoader] = useState(false);
 
   const [formValues, setFormValues] = useState({
     employee_email: "",
@@ -22,20 +24,24 @@ const ForgetPassword = () => {
   const successApi = () => {
     dispatch(allActions.userActions.amountAddedSuccess(true));
     navigate("/ThankYou");
+    setIsLoader(false)
   };
 
   const handleSubmit = () => {
+    setIsLoader(true)
     forgetPasswordApi(formValues, successApi, (err) => {
       console.log(err.response.data);
+      setIsLoader(false)
     });
   };
 
   return (
+    isLoader? <Loader/>:
     <div className="container">
       <div className="content">
         {/* containet Left */}
         <div className="content_lft">
-          <h1>Welcome from Chips Shop!</h1>
+          {/* <h1>Welcome from Chips Shop!</h1>
           <p className="discrptn">
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
@@ -44,7 +50,7 @@ const ForgetPassword = () => {
             need to be sure there isn't anything embarrassing hidden in the
             middle of text.{" "}
           </p>
-          <img src="images/img_9.png" alt />{" "}
+          <img src="images/img_9.png" alt />{" "} */}
         </div>
         {/* containet Right */};
         <div className="content_rgt">

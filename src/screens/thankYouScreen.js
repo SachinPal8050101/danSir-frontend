@@ -10,7 +10,7 @@ const ThankYouScreen = ()=>{
             </div>
             <div className="content_lft">
               <h1>Thank You!</h1>
-              <p className="discrptn">
+              {/* <p className="discrptn">
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form, by
                 injected humour, or randomised words which don't look even
@@ -18,7 +18,7 @@ const ThankYouScreen = ()=>{
                 Ipsum, you need to be sure there isn't anything embarrassing
                 hidden in the middle of text.{" "}
               </p>
-              <img src="images/img_9.png" alt />
+              <img src="images/img_9.png" alt /> */}
             </div>
           </div>
         </div>

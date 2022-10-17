@@ -4,9 +4,10 @@ import { logInApi } from "../service";
 import { setInLocalStorage } from "../utils/setGetAsyncStorage";
 import { useDispatch } from "react-redux";
 import allActions from "../action";
+import Loader from "../component/loader";
 
 const LogInAccount = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
   let dispatch = useDispatch();
 
   let navigate = useNavigate();
@@ -22,26 +23,30 @@ const LogInAccount = () => {
   };
 
   const successApi = (res) => {
+   
     console.log("Success");
     let token = res.data.data._id;
     dispatch(allActions.userActions.userCreateAccount(res));
     setInLocalStorage("Token", token);
     navigate("/");
+    setIsLoader(false)
   };
 
   const failcallApi = (err) => {
+    setIsLoader(false)
     alert(err.response.data);
   };
 
   const handleSubmit = () => {
+    setIsLoader(true)
     logInApi(formValues, successApi, failcallApi);
   };
 
   return (
-    <>
+    isLoader ? <Loader /> : 
       <div className="container">
         <div className="content">
-          <div className="content_rgt">
+          {/* <div className="content_rgt"> */}
             <div className="login_sec">
               <h1>Log In</h1>
               <ul>
@@ -86,7 +91,7 @@ const LogInAccount = () => {
               </div>
             </div>
           </div>
-          <div className="content_lft">
+          {/* <div className="content_lft">
             <h1>Welcome from Chips Shop!</h1>
             <p className="discrptn">
               There are many variations of passages of Lorem Ipsum available,
@@ -97,10 +102,9 @@ const LogInAccount = () => {
               hidden in the middle of text.{" "}
             </p>
             <img src="images/img_9.png" alt />
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
-    </>
   );
 };
 

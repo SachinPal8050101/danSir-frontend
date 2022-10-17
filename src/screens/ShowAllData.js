@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import allActions from "../action";
+import Loader from "../component/loader";
 import { getMoneyFromUser, showAllAdminData } from "../service";
 import ReactCustomModal from "../utils/Modal";
 import { removeFromLocalStorage } from "../utils/setGetAsyncStorage";
@@ -9,20 +10,25 @@ import { removeFromLocalStorage } from "../utils/setGetAsyncStorage";
 function ShowAllData(props) {
   const [showData, setShowData] = useState([]);
   const [showModal,setShowModal] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
+
 
   let dispatch = useDispatch();
 
   const successApi = (res) => {
     setShowData(res.data.result);
+    setIsLoader(false)
   };
 
   const failcallApi = (err) => {
     alert(err.response.data);
+    setIsLoader(false)
   };
 
   const successApiforAmountAdded=(res)=>{
     setShowData(res.data.result);
     setShowModal(true)
+    setIsLoader(false)
   }
 
   const handleClick = (employee_id, employee_name) => {
@@ -32,6 +38,7 @@ function ShowAllData(props) {
     //   answer = prompt(`Please Enter ${employee_name} Amount`);
     // }
     // if (answer > 0) {
+      setIsLoader(true)
       getMoneyFromUser(
         { employee_id: employee_id, get_money: Number(answer) },
         () => {
@@ -46,6 +53,8 @@ function ShowAllData(props) {
 
   useEffect(() => {
     showAllAdminData(successApi, failcallApi);
+    setIsLoader(true)
+
   }, []);
 
   const logOut = () => {
@@ -61,15 +70,15 @@ function ShowAllData(props) {
 
 
   return (
-    <>
+    isLoader? <Loader/>:
       <div className="container">
         <div className="content">
         {showModal?<ReactCustomModal 
             onCloseModal={closeModal}
           /> :null } 
-          <div className="content_rgt">
+          {/* <div className="content_rgt"> */}
             <div className="register_sec">
-              <h1>Purchased Amound of All Users</h1>
+              <h1>Welcome from Chips Shop!</h1>
               <ul>
                 <div>
                   <table className="table">
@@ -110,7 +119,7 @@ function ShowAllData(props) {
               </ul>
             </div>
           </div>
-          <div className="content_lft">
+          {/* <div className="content_lft">
             <h1>Welcome from Chips Shop!</h1>
             <p className="discrptn">
               There are many variations of passages of Lorem Ipsum available,
@@ -121,10 +130,9 @@ function ShowAllData(props) {
               hidden in the middle of text.{" "}
             </p>
             <img src="images/img_9.png" alt />{" "}
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
-    </>
   );
 }
 

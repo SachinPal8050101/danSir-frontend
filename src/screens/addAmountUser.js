@@ -6,10 +6,12 @@ import { getTotalAmountOfUser, sendAmoundOfPurchased } from "../service";
 import { getFromLocalStorage, removeFromLocalStorage } from "../utils/setGetAsyncStorage";
 import ModalComponent from 'react-modal-dom';
 import ReactCustomModal from "../utils/Modal";
+import Loader from "../component/loader";
 
 
 const AddAmountUser = (props) => {
   const [showModal,setShowModal] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let userData = useSelector(
@@ -38,10 +40,14 @@ const AddAmountUser = (props) => {
       () => {}
     );
     setShowModal(true)
+    setIsLoader(false)
+    setAmount(0)
   };
 
   const failcallApi = (err) => {
+    setIsLoader(false)
     alert(err.response.data);
+    setAmount(0)
   };
 
   useEffect(() => {
@@ -69,7 +75,13 @@ const AddAmountUser = (props) => {
       employee_code: userData?.employee_code,
       amount: { date: date.getDate(), puchaseAmount: Number(amount) },
     };
+    if(amount>0){
+      setIsLoader(true)
     sendAmoundOfPurchased(formVal, successApi, failcallApi);
+    }
+    else{
+      alert("Please Enter a valid Amount")
+    }
   };
 
   const logOut=()=>{
@@ -84,6 +96,7 @@ const AddAmountUser = (props) => {
   }
 
   return (
+    isLoader? <Loader/>:
     <div className="container">
         <div className="content">
           {/* containet Left */}
@@ -92,7 +105,7 @@ const AddAmountUser = (props) => {
             onCloseModal={closeModal}
           /> :null } 
             <h1>Welcome from Chips Shop!</h1>
-            <p className="discrptn">
+            {/* <p className="discrptn">
               There are many variations of passages of Lorem Ipsum available,
               but the majority have suffered alteration in some form, by
               injected humour, or randomised words which don't look even
@@ -100,7 +113,7 @@ const AddAmountUser = (props) => {
               Ipsum, you need to be sure there isn't anything embarrassing
               hidden in the middle of text.{' '}
             </p>
-            <img src="images/img_9.png" alt />{' '}
+            <img src="images/img_9.png" alt />{' '} */}
           </div>
           {/* containet Right */};
           <div className="content_rgt">
