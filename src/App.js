@@ -19,18 +19,18 @@ import ForgotPasswordAfterVarify from "./screens/forgetPasswordAfterVarify";
 import Loader from "./component/loader";
 
 const App = () => {
-  const [isAdmin,setIsAdmin] = useState(false)
+  // const [isAdmin,setIsAdmin] = useState(false)
   const [isLoader,setIsLoader] = useState(false)
   let dispatch = useDispatch();
   const [log,setLog]=useState(false)
-  let isAdmin1 = useSelector(
+  let isAdmin = useSelector(
     (state) => state.userReducers?.userDetailes?.data?.data?.isAdmin
   );
 
   const successApi=(res)=>{
     let token = res?.data?.data?._id
     console.log(res,token,res?.data)
-    setIsAdmin(res?.data?.data?.isAdmin)
+    // setIsAdmin(res?.data?.data?.isAdmin)
     dispatch(allActions.userActions.userCreateAccount(res))
     setIsLoader(false)
   }
@@ -50,10 +50,10 @@ const failcallApi=(err)=>{
   }, []);
 
   return (
-    isLoader?  <Loader />: <BrowserRouter basename="/">
+    isLoader ?? isAdmin == undefined ?  <Loader />: <BrowserRouter basename="/">
      
     <Routes>
-      {!isAdmin || !isAdmin1 ? (
+      {!isAdmin ? (
         <Route
           path="/"
           element={

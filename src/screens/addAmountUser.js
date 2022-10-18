@@ -53,7 +53,6 @@ const AddAmountUser = (props) => {
   useEffect(() => {
     let token = getFromLocalStorage("Token");
     token = JSON.parse(token);
-    console.log("sdfsd", totalAmount);
     if (token) {
       getTotalAmountOfUser(
         { employee_id: token },
@@ -75,12 +74,12 @@ const AddAmountUser = (props) => {
       employee_code: userData?.employee_code,
       amount: { date: date.getDate(), puchaseAmount: Number(amount) },
     };
-    if(amount>0){
+    if(amount>0 && amount < 500){
       setIsLoader(true)
     sendAmoundOfPurchased(formVal, successApi, failcallApi);
     }
     else{
-      alert("Please Enter a valid Amount")
+      alert("Please Enter a valid Amount More than 0 less that 500")
     }
   };
 
@@ -118,7 +117,7 @@ const AddAmountUser = (props) => {
           {/* containet Right */};
           <div className="content_rgt">
             <div className="register_sec">
-              <h1>{"Hey, "+ (userData?.employee_firstname ?? '') +' ' + "Total Amount is " +(totalAmount ?? 0) }</h1>
+              <h1>{"Hey, "+ (userData?.employee_firstname ?? '') +' ' + "your total amount is " +(totalAmount ?? 0)+ 'Rs.' }</h1>
               <ul>
                 <li>
                   <span>Please Enter Your Amount</span>

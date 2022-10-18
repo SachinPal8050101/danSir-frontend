@@ -37,7 +37,7 @@ function ShowAllData(props) {
     //   alert("Please enter only numbers!");
     //   answer = prompt(`Please Enter ${employee_name} Amount`);
     // }
-    // if (answer > 0) {
+    if (answer > 0) {
       setIsLoader(true)
       getMoneyFromUser(
         { employee_id: employee_id, get_money: Number(answer) },
@@ -48,7 +48,7 @@ function ShowAllData(props) {
           alert(err.response.data);
         }
       );
-    // }
+    }
   };
 
   useEffect(() => {
@@ -107,7 +107,7 @@ function ShowAllData(props) {
                                 )
                               }
                             >
-                              Pay
+                              Settle
                             </button>
                           </tr>
                         );
